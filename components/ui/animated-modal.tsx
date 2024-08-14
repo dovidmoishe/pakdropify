@@ -96,7 +96,7 @@ export const ModalBody = ({
             opacity: 0,
             backdropFilter: "blur(0px)",
           }}
-          className="fixed [perspective:800px] [transform-style:preserve-3d] inset-0 h-full w-full  flex items-center justify-center z-50"
+          className="fixed [perspective:800px] [transform-style:preserve-3d] inset-0 h-full w-full flex items-center justify-center z-50"
         >
           <Overlay />
 
@@ -146,12 +146,17 @@ export const ModalContent = ({
   className?: string;
 }) => {
   return (
-    <div className={cn("flex flex-col flex-1 p-8 md:p-10", className)}>
+    <div
+      className={cn(
+        "flex flex-col flex-1 p-8 md:p-10 overflow-y-auto",
+        className
+      )}
+      style={{ maxHeight: "calc(90vh - 64px)" }} // Adjusts for modal padding and allows scrolling
+    >
       {children}
     </div>
   );
 };
-
 export const ModalFooter = ({
   children,
   className,

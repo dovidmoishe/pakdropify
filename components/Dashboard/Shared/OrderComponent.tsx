@@ -6,6 +6,7 @@ type Order = {
   name: string;
   phoneNumber: string;
   deliveryStatus: string;
+  amount: number;
 };
 
 type OrderTableProps = {
@@ -28,6 +29,9 @@ const OrderTable: React.FC<OrderTableProps> = ({ orders }) => {
               Phone Number
             </th>
             <th className="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+              Amount
+            </th>
+            <th className="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
               Delivery Status
             </th>
           </tr>
@@ -45,8 +49,12 @@ const OrderTable: React.FC<OrderTableProps> = ({ orders }) => {
                 {order.phoneNumber}
               </td>
               <td className="px-6 py-4 border-b border-gray-200 text-sm text-gray-700">
+                ${order.amount}
+              </td>
+              <td className="px-6 py-4 border-b border-gray-200 text-sm text-gray-700">
                 {order.deliveryStatus}
               </td>
+              
             </tr>
           ))}
         </tbody>
@@ -62,6 +70,7 @@ const DelveredOrders: Order[] = [
     name: "John Doe",
     phoneNumber: "+1 234 567 890",
     deliveryStatus: "Delivered",
+    amount: 75
   },
 ];
 const InTransitOrders: Order[] = [
@@ -70,6 +79,7 @@ const InTransitOrders: Order[] = [
     name: "Jane Smith",
     phoneNumber: "+1 987 654 321",
     deliveryStatus: "In Transit",
+    amount:65
   },
 ];
 const PendingOrders: Order[] = [
@@ -78,6 +88,7 @@ const PendingOrders: Order[] = [
     name: "Alice Johnson",
     phoneNumber: "+1 564 738 291",
     deliveryStatus: "Pending",
+    amount: 50
   },
 ];
 const orders = [...DelveredOrders, ...InTransitOrders, ...PendingOrders]

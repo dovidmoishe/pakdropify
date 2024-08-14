@@ -11,9 +11,11 @@ import {
 import { MdHistory, MdOutlinePayments } from "react-icons/md";
 import { IoIosAdd } from "react-icons/io";
 import { TiMessages } from "react-icons/ti";
+import { FiMessageSquare } from "react-icons/fi";
 import Link from "next/link";
 import Image from "next/image";
 import Home from "./Home/Home";
+import CreateOrderModal from "./CreateOrderModal";
 
 export function Layout() {
   const links = [
@@ -76,12 +78,7 @@ export function Layout() {
                 {/* Conditionally render the button based on the `open` state */}
                 {open && (
                   <div className="px-4 transition-opacity duration-300">
-                    <button
-                      onClick={() => setActivePage("Create Order")}
-                      className="px-6 py-2 bg-transparent border border-black dark:border-white dark:text-white text-black rounded-lg font-bold transition-transform transform hover:-translate-y-1 flex items-center gap-3"
-                    >
-                     <IoIosAdd /> Create Order
-                    </button>
+                   <CreateOrderModal />
                   </div>
                 )}
                 {links.map((link, idx) => (
@@ -125,6 +122,11 @@ export function Layout() {
           )}
         </div>
       </div>
+      <div className="fixed bottom-4 right-4">
+        <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-4 rounded-full shadow-lg">
+        <FiMessageSquare />
+        </button>
+      </div>
     </div>
   );
 }
@@ -135,7 +137,7 @@ export const Logo = () => {
       href="#"
       className="font-normal space-x-2 text-sm text-black py-1 relative z-20"
     >
-      <Image src={Pakdropify} width={70} height={70} alt="PakDropify Logo" />
+      <Image src={Pakdropify} width={100} height={100} alt="PakDropify Logo" />
     </Link>
   );
 };

@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { IoIosAdd } from "react-icons/io";
 import OrderTableComponent from "../OrderComponent";
 import SearchInput from "../Input";
 import { Tabs } from "@/components/ui/tabs";
+import CreateOrderModal from "../CreateOrderModal";
+import ProfitsInformation from "./ProfitsInformation";
 
 function Home() {
   const tabs = [
@@ -14,9 +16,18 @@ function Home() {
     {
       title: "Delivered",
       value: "Delivered",
-      content: <OrderTableComponent orderType={"delivered"} />
+      content: <OrderTableComponent orderType={"delivered"} />,
     },
-
+    {
+      title: "In Transit",
+      value: "In Transit",
+      content: <OrderTableComponent orderType={"inTransit"} />,
+    },
+    {
+      title: "Pending",
+      value: "Pending",
+      content: <OrderTableComponent orderType={"pending"} />,
+    },
   ];
   return (
     <div className="">
@@ -32,18 +43,18 @@ function Home() {
         >
           Manage your PakDropify Dashboard
         </span>
-        <button className="relative p-[3px] group">
-          <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg group-hover:opacity-90 transition-opacity duration-300" />
-          <div className="px-8 py-2 bg-black rounded-lg relative text-white flex items-center gap-2 transition-colors duration-200 hover:bg-transparent">
-            <IoIosAdd size={25} />
-            <span>Create Order</span>
-          </div>
-        </button>
+        <CreateOrderModal />
       </div>
       <div className="mt-7">
+        <ProfitsInformation />
+      </div>
+      <div className="mt-5">
         <p className="text-left font-medium text-3xl mb-3">Your Orders</p>
       </div>
-      <Tabs tabs={tabs} />
+
+      <div>
+        <Tabs tabs={tabs} />
+      </div>
     </div>
   );
 }

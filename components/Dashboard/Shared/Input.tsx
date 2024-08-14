@@ -1,6 +1,13 @@
 import { PlaceholdersAndVanishInput } from '@/components/ui/placeholders-and-vanish-input';
 import React from 'react'
-
+import {
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalTrigger,
+} from "@/components/ui/animated-modal";
+import Image from "next/image";
 type Props = {
   className: string
 }
@@ -14,9 +21,9 @@ const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 };
 
 const placeholders = [
-  "Enter Tracking ID",
-  "Enter Recipient Name",
-  "Enter Phone Number"
+  "Search by Tracking ID",
+  "Search by Recipient Name",
+  "Search by Phone Number"
 ]
 export default function SearchInput({className}: Props) {
   return (
