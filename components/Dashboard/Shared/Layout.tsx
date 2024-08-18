@@ -14,8 +14,11 @@ import { TiMessages } from "react-icons/ti";
 import { FiMessageSquare } from "react-icons/fi";
 import Link from "next/link";
 import Image from "next/image";
-import Home from "./Home/Home";
+import Home from "../Home/Home";
 import CreateOrderModal from "./CreateOrderModal";
+import AccountDetails from "../Account/Account";
+import Orders from "../Orders/Orders";
+import TicketForm from "../Tickets/Tickets";
 
 export function Layout() {
   const links = [
@@ -33,6 +36,7 @@ export function Layout() {
       icon: (
         <MdHistory className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
+      component: <Orders />,
     },
     {
       label: "Payments",
@@ -47,6 +51,11 @@ export function Layout() {
       icon: (
         <TiMessages className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
+      component: (
+        <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+          <TicketForm />
+        </div>
+      ),
     },
     {
       label: "Profile",
@@ -54,6 +63,7 @@ export function Layout() {
       icon: (
         <IconUserBolt className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
+      component: <AccountDetails />,
     },
     {
       label: "Logout",
@@ -78,7 +88,7 @@ export function Layout() {
                 {/* Conditionally render the button based on the `open` state */}
                 {open && (
                   <div className="px-4 transition-opacity duration-300">
-                   <CreateOrderModal />
+                    <CreateOrderModal />
                   </div>
                 )}
                 {links.map((link, idx) => (
@@ -92,11 +102,12 @@ export function Layout() {
                 ))}
               </div>
             </div>
-            <div>
+            <div onClick={() => setActivePage("Profile")}>
               <SidebarLink
                 link={{
                   label: "Manu Arora",
                   href: "#",
+
                   icon: (
                     <Image
                       src="https://assets.aceternity.com/manu.png"
@@ -123,8 +134,11 @@ export function Layout() {
         </div>
       </div>
       <div className="fixed bottom-4 right-4">
-        <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-4 rounded-full shadow-lg">
-        <FiMessageSquare />
+        <button
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-4 rounded-full shadow-lg"
+          onClick={() => setActivePage("Tickets")}
+        >
+          <FiMessageSquare />
         </button>
       </div>
     </div>

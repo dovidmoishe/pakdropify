@@ -1,7 +1,6 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-// Assuming Modal, ModalTrigger, ModalBody, and ModalContent components are defined elsewhere in your codebase
 import {
   Modal,
   ModalTrigger,
@@ -13,7 +12,24 @@ import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
+const product_and_prices = [
+  {
+    sku: 1234,
+    price: 50
+  }
+]
+
 export default function CreateOrderModal() {
+  const [productPrice, setProductPrice] = useState(0)
+  const [sku, setSku] = useState<number>(0)
+ 
+  useEffect(() => {
+      product_and_prices.forEach(product => {
+         setProductPrice(product.sku == sku ? product.price : 0)
+      })
+    
+    
+  }, [sku])
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     // Handle form submission logic here
@@ -61,7 +77,8 @@ export default function CreateOrderModal() {
             </LabelInputContainer>
             <LabelInputContainer className="mb-4">
               <Label htmlFor="sku">Product SKU</Label>
-              <Input id="sku" placeholder="ABC123" type="text" required />
+              <Input id="sku" placeholder="1234" type="number" onChange={(event) => setSku(event.target.value as unknown as number)} required />
+              <p className="text-red-600 flex gap-2 ">The price of the product is: <span className="font-normal text-md flex">RM {productPrice}</span></p>
             </LabelInputContainer>
             <LabelInputContainer className="mb-4">
               <Label htmlFor="price">Selling Price</Label>

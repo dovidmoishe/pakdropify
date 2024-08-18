@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { IoIosAdd } from "react-icons/io";
-import OrderTableComponent from "../OrderComponent";
-import SearchInput from "../Input";
+import OrderTableComponent from "../Shared/OrderComponent";
+import SearchInput from "../Shared/Input";
 import { Tabs } from "@/components/ui/tabs";
-import CreateOrderModal from "../CreateOrderModal";
+import CreateOrderModal from "../Shared/CreateOrderModal";
 import ProfitsInformation from "./ProfitsInformation";
 
 function Home() {
@@ -52,7 +52,7 @@ function Home() {
         <p className="text-left font-medium text-3xl mb-3">Your Orders</p>
       </div>
 
-      <div>
+      <div className="h-[20rem] md:h-[40rem]  flex flex-col max-w-5xl w-full  items-start ">
         <Tabs tabs={tabs} />
       </div>
     </div>
