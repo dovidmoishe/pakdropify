@@ -77,8 +77,8 @@ export default function CreateOrderModal() {
             </LabelInputContainer>
             <LabelInputContainer className="mb-4">
               <Label htmlFor="sku">Product SKU</Label>
-              <Input id="sku" placeholder="1234" type="number" onChange={(event) => setSku(event.target.value as unknown as number)} required />
-              <p className="text-red-600 flex gap-2 ">The price of the product is: <span className="font-normal text-md flex">RM {productPrice}</span></p>
+              <Input id="sku" placeholder="1234" type="number" value={sku} onChange={(event) => setSku(event.target.value as unknown as number)} required />
+              <div className={`text-red-600 flex gap-2 ${sku == 0 ? "invisible" : "visible"} `}>The price of the product is: <p className="font-normal text-md flex">RM {productPrice}</p></div>
             </LabelInputContainer>
             <LabelInputContainer className="mb-4">
               <Label htmlFor="price">Selling Price</Label>

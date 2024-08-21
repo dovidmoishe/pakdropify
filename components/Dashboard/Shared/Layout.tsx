@@ -19,6 +19,7 @@ import CreateOrderModal from "./CreateOrderModal";
 import AccountDetails from "../Account/Account";
 import Orders from "../Orders/Orders";
 import TicketForm from "../Tickets/Tickets";
+import Payments from "../Payments/Payments";
 
 export function Layout() {
   const links = [
@@ -44,6 +45,7 @@ export function Layout() {
       icon: (
         <MdOutlinePayments className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
+      component: <Payments />
     },
     {
       label: "Tickets",
@@ -126,11 +128,9 @@ export function Layout() {
       <div className="flex-1 h-full overflow-auto bg-white">
         <div className="p-8">
           {/* Render the selected component */}
-          {activePage === "Create Order" ? (
-            <CreateOrderComponent />
-          ) : (
-            links.find((link) => link.label === activePage)?.component
-          )}
+         
+           { links.find((link) => link.label === activePage)?.component}
+
         </div>
       </div>
       <div className="fixed bottom-4 right-4">
@@ -167,11 +167,3 @@ export const LogoIcon = () => {
   );
 };
 
-// Dummy components for demonstration purposes
-const Dashboard = () => {
-  return <div>Dashboard Content</div>;
-};
-
-const CreateOrderComponent = () => {
-  return <div>Create Order Page</div>;
-};

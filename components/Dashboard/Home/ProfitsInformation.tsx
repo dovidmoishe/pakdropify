@@ -18,7 +18,7 @@ function ProfitsInformation({}: Props) {
           <FaCalendar size={40} className="text-gray-600" />
           <div className="flex flex-col">
             <p className="text-sm md:text-md">Will be transferred to you</p>
-            <p className="text-lg md:text-xl text-green-500 flex gap-1"><div className='font-medium text-md'>RM</div> 1,250</p>
+            <p className="text-lg md:text-xl text-green-500 flex gap-1"><span className='font-medium text-md'>RM</span> 1,250</p>
             <p className="text-xs md:text-sm text-gray-500">
               Last updated on 04 August 11:59PM
             </p>
@@ -29,8 +29,8 @@ function ProfitsInformation({}: Props) {
           <p className="text-sm md:text-md font-normal">
             Completed Orders: 10
             <br />
-            <p className="flex gap-1">Total Profits: <span className='font-medium text-md'>RM</span> 1000</p>
-            <p className="flex gap-1">Transferred to you: <span className='font-medium text-md'>RM</span> 0</p>
+            <div className="flex gap-1">Total Profits: <span className='font-medium text-md'>RM</span> 1000</div>
+            <div className="flex gap-1">Transferred to you: <span className='font-medium text-md'>RM</span> 0</div>
           </p>
         </div>
       </div>
