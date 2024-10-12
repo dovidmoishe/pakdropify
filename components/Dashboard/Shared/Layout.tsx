@@ -1,5 +1,6 @@
-"use client";
-import React, { useState } from "react";
+import HeroSection from "@/components/Hero/Hero";
+import Navbar from "@/components/Navbar/Navbar";
+import { useContext, useEffect, useState } from "react";
 import { Sidebar, SidebarBody, SidebarLink } from "../../ui/sidebar";
 import Pakdropify from "@/public/pakdropify.png";
 import {
@@ -20,6 +21,7 @@ import AccountDetails from "../Account/Account";
 import Orders from "../Orders/Orders";
 import TicketForm from "../Tickets/Tickets";
 import Payments from "../Payments/Payments";
+import { UserContext } from "@/lib/context/user";
 
 export function Layout() {
   const links = [
@@ -45,7 +47,7 @@ export function Layout() {
       icon: (
         <MdOutlinePayments className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
-      component: <Payments />
+      component: <Payments />,
     },
     {
       label: "Tickets",
@@ -73,11 +75,13 @@ export function Layout() {
       icon: (
         <IconArrowLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
+      onClick: () => logout(), // Call logout when clicked
     },
   ];
 
   const [open, setOpen] = useState(false);
   const [activePage, setActivePage] = useState("Dashboard");
+  const { logout } = useContext(UserContext); // Get logout function from UserContext
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -96,7 +100,10 @@ export function Layout() {
                 {links.map((link, idx) => (
                   <div
                     key={idx}
-                    onClick={() => setActivePage(link.label)}
+                    onClick={() => {
+                      setActivePage(link.label);
+                      link.onClick && link.onClick(); // Call the link's onClick if defined
+                    }}
                     className="cursor-pointer"
                   >
                     <SidebarLink link={link} />
@@ -104,33 +111,14 @@ export function Layout() {
                 ))}
               </div>
             </div>
-            <div onClick={() => setActivePage("Profile")}>
-              <SidebarLink
-                link={{
-                  label: "Manu Arora",
-                  href: "#",
 
-                  icon: (
-                    <Image
-                      src="https://assets.aceternity.com/manu.png"
-                      className="h-7 w-7 flex-shrink-0 rounded-full"
-                      width={50}
-                      height={50}
-                      alt="Avatar"
-                    />
-                  ),
-                }}
-              />
-            </div>
           </SidebarBody>
         </Sidebar>
       </div>
       <div className="flex-1 h-full overflow-auto bg-white">
         <div className="p-8">
           {/* Render the selected component */}
-         
-           { links.find((link) => link.label === activePage)?.component}
-
+          {links.find((link) => link.label === activePage)?.component}
         </div>
       </div>
       <div className="fixed bottom-4 right-4">
@@ -166,4 +154,3 @@ export const LogoIcon = () => {
     </Link>
   );
 };
-

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext,useEffect, useState } from "react";
 
 import {
   Modal,
@@ -11,28 +11,62 @@ import { IoIosAdd } from "react-icons/io";
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { databases } from "@/lib/appwrite";
+import { ID } from "appwrite";
+import { UserContext } from "@/lib/context/user";
 
 const product_and_prices = [
   {
     sku: 1234,
-    price: 50
-  }
-]
+    price: 50,
+  },
+]; 
 
 export default function CreateOrderModal() {
-  const [productPrice, setProductPrice] = useState(0)
-  const [sku, setSku] = useState<number>(0)
- 
+  const {current} = useContext(UserContext)
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    sku: 0,
+    price: 0,
+    address: "",
+    postalcode: "",
+    state: "",
+    productPrice: 0,
+  });
+
   useEffect(() => {
-      product_and_prices.forEach(product => {
-         setProductPrice(product.sku == sku ? product.price : 0)
-      })
-    
-    
-  }, [sku])
-  const handleSubmit = (e: { preventDefault: () => void }) => {
+    const selectedProduct = product_and_prices.find(
+      (product) => product.sku == formData.sku
+    );
+    setFormData((prevData) => ({
+      ...prevData,
+      productPrice: selectedProduct ? selectedProduct.price : 0,
+    }));
+  }, [formData.sku]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { id, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [id]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    // Handle form submission logic here
+    // Form submission logic here
+    console.log("Form Data Submitted:", formData);
+    await databases.createDocument('66c22b21001e7eea3fa7', '670608d1001f19afde3a', ID.unique(), {
+      customerName:  formData.name,
+      customerPhoneNumber: formData.phone,
+      customerEmail:  formData.email,
+      productSku:  formData.sku,
+      sellingPrice:   formData.price,
+      customerAddress:   formData.address,
+      userId: current.$id
+    })
   };
 
   return (
@@ -55,7 +89,14 @@ export default function CreateOrderModal() {
             <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
               <LabelInputContainer>
                 <Label htmlFor="name">Customer Name</Label>
-                <Input id="name" placeholder="John Doe" type="text" required />
+                <Input
+                  id="name"
+                  placeholder="John Doe"
+                  type="text"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
               </LabelInputContainer>
               <LabelInputContainer>
                 <Label htmlFor="phone">Customer Phone Number</Label>
@@ -63,6 +104,8 @@ export default function CreateOrderModal() {
                   id="phone"
                   placeholder="+60 123-456789"
                   type="tel"
+                  value={formData.phone}
+                  onChange={handleChange}
                   required
                 />
               </LabelInputContainer>
@@ -73,12 +116,28 @@ export default function CreateOrderModal() {
                 id="email"
                 placeholder="johndoe@example.com"
                 type="email"
+                value={formData.email}
+                onChange={handleChange}
               />
             </LabelInputContainer>
             <LabelInputContainer className="mb-4">
               <Label htmlFor="sku">Product SKU</Label>
-              <Input id="sku" placeholder="1234" type="number" value={sku} onChange={(event) => setSku(event.target.value as unknown as number)} required />
-              <div className={`text-red-600 flex gap-2 ${sku == 0 ? "invisible" : "visible"} `}>The price of the product is: <p className="font-normal text-md flex">RM {productPrice}</p></div>
+              <Input
+                id="sku"
+                placeholder="1234"
+                type="number"
+                value={formData.sku}
+                onChange={handleChange}
+                required
+              />
+              <div
+                className={`text-red-600 flex gap-2 ${
+                  formData.sku == 0 ? "invisible" : "visible"
+                } `}
+              >
+                The price of the product is:
+                <p className="font-normal text-md flex">RM {formData.productPrice}</p>
+              </div>
             </LabelInputContainer>
             <LabelInputContainer className="mb-4">
               <Label htmlFor="price">Selling Price</Label>
@@ -87,6 +146,8 @@ export default function CreateOrderModal() {
                 placeholder="100.00"
                 type="number"
                 step="0.01"
+                value={formData.price}
+                onChange={handleChange}
                 required
               />
             </LabelInputContainer>
@@ -96,18 +157,29 @@ export default function CreateOrderModal() {
                 id="address"
                 placeholder="123 Main Street"
                 type="text"
+                value={formData.address}
+                onChange={handleChange}
                 required
               />
             </LabelInputContainer>
             <LabelInputContainer className="mb-4">
               <Label htmlFor="postalcode">Postal Code</Label>
-              <Input id="postalcode" placeholder="12345" type="text" required />
+              <Input
+                id="postalcode"
+                placeholder="12345"
+                type="text"
+                value={formData.postalcode}
+                onChange={handleChange}
+                required
+              />
             </LabelInputContainer>
             <LabelInputContainer className="mb-4">
               <Label htmlFor="state">State</Label>
               <select
                 id="state"
                 className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-400"
+                value={formData.state}
+                onChange={handleChange}
                 required
               >
                 <option value="">Select a state</option>
@@ -131,7 +203,6 @@ export default function CreateOrderModal() {
             </LabelInputContainer>
 
             <div className="flex justify-between mt-6">
-            
               <button
                 type="submit"
                 className="px-4 py-2 bg-blue-600 text-white rounded-md"

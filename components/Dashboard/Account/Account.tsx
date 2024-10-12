@@ -8,7 +8,7 @@ type Props = {};
 const AccountDetails = (props: Props) => {
   return (
     <div>
-      <div className="flex flex-col items-center md:flex-row justify-start border-2 border-gray-200 rounded-md p-4 md:py-9 gap-4 md:gap-6">
+      {/* <div className="flex flex-col items-center md:flex-row justify-start border-2 border-gray-200 rounded-md p-4 md:py-9 gap-4 md:gap-6">
         <Image
           src="https://assets.aceternity.com/manu.png"
           width={150}
@@ -23,7 +23,7 @@ const AccountDetails = (props: Props) => {
             Remove
           </button>
         </div>
-      </div>
+      </div> */}
       <div className="border-2 border-gray-200 rounded-md mt-3 p-4">
       <form className="flex flex-col gap-4">
         {/* Name Input */}
@@ -40,7 +40,7 @@ const AccountDetails = (props: Props) => {
           />
         </div>
 
-        {/* Language Input */}
+        {/* Language Input
         <div>
           <label htmlFor="language" className="block text-sm font-medium text-gray-700">
             Language
@@ -55,7 +55,7 @@ const AccountDetails = (props: Props) => {
         </div>
 
         {/* Country Dropdown */}
-        <div>
+        {/* <div>
           <label htmlFor="country" className="block text-sm font-medium text-gray-700">
             Country
           </label>
@@ -70,7 +70,7 @@ const AccountDetails = (props: Props) => {
             <option value="malaysia">Malaysia</option>
             <option value="pakistan">Pakistan</option>
           </select>
-        </div>
+        </div> */} 
 
         {/* Action Buttons */}
         <div className="flex justify-between mt-4">

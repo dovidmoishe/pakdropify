@@ -1,4 +1,5 @@
 "use client";
+import { databases } from "@/lib/appwrite";
 import React from "react";
 
 type Order = {
@@ -63,6 +64,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ orders }) => {
   );
 };
 
+// const populateOrders = await databases.getDocument('66c22b21001e7eea3fa7', '670608d1001f19afde3a', )
 // Example usage with dummy data
 const DelveredOrders: Order[] = [
   {

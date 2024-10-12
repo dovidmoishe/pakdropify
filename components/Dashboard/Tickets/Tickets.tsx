@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const categories = ["Technical Issue", "Billing", "General Inquiry"];
+const categories = ["General Enquiries", "Payment Related Issues", "Complains", "Others"];
 
 const TicketForm = () => {
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);

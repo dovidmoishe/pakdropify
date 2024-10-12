@@ -1,17 +1,19 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Head } from "next/document";
-import { NextSeo } from 'next-seo';
+import { NextSeo } from "next-seo";
+import UserProvider from "@/lib/context/user";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <NextSeo
-      title="PakDropify"
-      description="Manage your PakDropify Dashboard wih ease"
-      
-    />
-      <Component {...pageProps} />;
+        title="PakDropify"
+        description="Manage your PakDropify Dashboard wih ease"
+      />
+      <UserProvider>
+        <Component {...pageProps} />;
+      </UserProvider>
     </>
   );
 }
