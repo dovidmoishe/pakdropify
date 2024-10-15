@@ -9,7 +9,7 @@ import {
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { cn } from "@/lib/utils";
-import { UserContext } from "@/lib/context/user";
+import { useUser } from "@/lib/context/user";
 
 interface FormValues {
   firstname: string;
@@ -54,7 +54,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isVerifiedAccount }) => {
 
   const [isLogin, setIsLogin] = useState(true); // To toggle between login and signup
 
-  const { register, login } = useContext(UserContext);
+  const { register, login } = useUser()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -73,6 +73,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isVerifiedAccount }) => {
       lastname,
       email,
       password,
+      bankName,
       bankAccountNumber,
       bankAccountTitle,
       iban,
@@ -86,11 +87,12 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isVerifiedAccount }) => {
         lastname,
         email,
         password,
-        bankAccountNumber,
-        bankAccountTitle,
-        iban,
         phoneNumber,
-        cnicNumber
+        iban,
+        cnicNumber,
+        bankName,
+        bankAccountTitle,
+        bankAccountNumber
       );
     }
   };

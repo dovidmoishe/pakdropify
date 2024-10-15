@@ -30,7 +30,7 @@ const Orders = (props: Props) => {
   ];
   return (
     <div>
-      <SearchInput className="mb-3 " />
+      {/* <SearchInput className="mb-3 " /> */}
 
       <div className="h-[20rem] md:h-[40rem]  flex flex-col max-w-5xl w-full  items-start mt-3 ">
         <Tabs tabs={tabs} />

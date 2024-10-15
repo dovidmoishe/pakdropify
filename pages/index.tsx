@@ -1,57 +1,44 @@
 import HeroSection from "@/components/Hero/Hero";
 import Navbar from "@/components/Navbar/Navbar";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { account } from "@/lib/appwrite";
+import { useUser } from "@/lib/context/user";
 
 export default function Home() {
-  const [userVerified, setUserVerified] = useState(false);
   const [currentUser, setCurrentUser] = useState<any>(null);
-  const [activeSession, setActiveSession] = useState(false)
+  const [activeSession, setActiveSession] = useState(false);
   const [loading, setLoading] = useState(true); // Loading state
   const router = useRouter();
 
+  const { user, userVerified } = useUser();
+
   const populateAccount = async () => {
-    
-    try {
-      const sessionId = "current"
-      const activeSession = await account.getSession(sessionId)
-      
-      if(activeSession) {
-        const currentAccount = await account.get()
-        return {
-          verified: currentAccount.emailVerification,
-          user: currentAccount,
-          activeSession: true
-        };
-      }
-    } catch (error) {
-      console.error("Error fetching account: ", error);
-      return null; // Return null if no user is logged in or an error occurs
-    }
+    return {
+      verified: user?.emailVerification,
+      user: user,
+      activeSession: user?.status,
+    };
   };
 
   useEffect(() => {
     const getUserData = async () => {
       const userData = await populateAccount();
-      
-      if (userData?.activeSession == true) {
-        setCurrentUser(userData.user);
-        setUserVerified(userData.verified);
-        setActiveSession(true)
 
-        // Only redirect if the user is verified
-        if (userData.verified) {
-          router.push("/dashboard");
-        }
+      if (userVerified) {
+        router.push("/dashboard"); // Redirect to dashboard if verified
       }
 
-      // Ensure loading is set to false regardless
-      setLoading(false);
+      if (userData?.activeSession) {
+        setCurrentUser(userData.user);
+        setActiveSession(true);
+      }
+
+      setLoading(false); // Ensure loading is set to false after fetching data
     };
 
     getUserData();
-  }, [router]);
+  }, [router, userVerified]); // Make sure useEffect depends on `userVerified`
 
   // Show a loading state while fetching the user data
   if (loading) {
@@ -60,19 +47,17 @@ export default function Home() {
 
   return (
     <>
-      {
-        activeSession && !userVerified ? (
-          <>
+      {activeSession && !userVerified ? (
+        <>
           <Navbar />
-          <HeroSection isVerifiedAccount={true}/>
+          <HeroSection isVerifiedAccount={false} />
         </>
-        ) :(
-          <>
+      ) : (
+        <>
           <Navbar />
-          <HeroSection isVerifiedAccount={false}/>
+          <HeroSection isVerifiedAccount={true} />
         </>
-        )
-      }
+      )}
     </>
   );
 }

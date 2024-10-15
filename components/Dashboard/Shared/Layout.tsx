@@ -21,7 +21,8 @@ import AccountDetails from "../Account/Account";
 import Orders from "../Orders/Orders";
 import TicketForm from "../Tickets/Tickets";
 import Payments from "../Payments/Payments";
-import { UserContext } from "@/lib/context/user";
+import { useUser } from "@/lib/context/user";
+
 
 export function Layout() {
   const links = [
@@ -81,7 +82,7 @@ export function Layout() {
 
   const [open, setOpen] = useState(false);
   const [activePage, setActivePage] = useState("Dashboard");
-  const { logout } = useContext(UserContext); // Get logout function from UserContext
+  const { logout } = useUser() // Get logout function from UserContext
 
   return (
     <div className="flex h-screen overflow-hidden">

@@ -2,9 +2,9 @@ import Image from 'next/image'
 import React from 'react'
 import Pakdropify from '@/public/pakdropify.png'
 import { useContext } from 'react'
-import { UserContext } from '@/lib/context/user'
+
 const Navbar: React.FC = () => {
-  const {login} = useContext(UserContext)
+
   return (
     <nav className=' py-4 px-6'>
       <div className='container mx-auto flex items-center justify-between'>

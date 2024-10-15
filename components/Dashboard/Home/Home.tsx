@@ -31,7 +31,7 @@ function Home() {
   ];
   return (
     <div className="">
-      <SearchInput className="mb-3 " />
+      {/* <SearchInput className="mb-3 " /> */}
 
       <div
         className="flex flex-col md:flex-row items-center justify-between p-6 md:p-10 rounded-3xl space-y-4 md:space-y-0"

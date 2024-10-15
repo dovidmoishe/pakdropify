@@ -1,10 +1,12 @@
 "use client";
-import React from "react";
+import { databases } from "@/lib/appwrite";
+import { useUser } from "@/lib/context/user";
+import { Query } from "appwrite";
+import React, { useEffect, useState } from "react";
 
 type CustomerTransaction = {
   customerId: string;
   type: string;
-  status: string;
   transactionDate: string;
   amount: number;
 };
@@ -13,7 +15,9 @@ type TransactionTableProps = {
   transactions: CustomerTransaction[];
 };
 
-const TransactionTable: React.FC<TransactionTableProps> = ({ transactions }) => {
+const TransactionTable: React.FC<TransactionTableProps> = ({
+  transactions,
+}) => {
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full bg-white">
@@ -25,9 +29,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({ transactions }) => 
             <th className="px-6 py-3 border-b text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
               Type
             </th>
-            <th className="px-6 py-3 border-b text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-              Status
-            </th>
+           
             <th className="px-6 py-3 border-b text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
               Transaction Date
             </th>
@@ -45,9 +47,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({ transactions }) => 
               <td className="px-6 py-4 text-sm text-gray-700">
                 {transaction.type}
               </td>
-              <td className="px-6 py-4 text-sm text-gray-700">
-                {transaction.status}
-              </td>
+            
               <td className="px-6 py-4 text-sm text-gray-700">
                 {transaction.transactionDate}
               </td>
@@ -63,32 +63,31 @@ const TransactionTable: React.FC<TransactionTableProps> = ({ transactions }) => 
   );
 };
 
-// Example usage with dummy data
-const transactions: CustomerTransaction[] = [
-  {
-    customerId: "C001",
-    type: "Purchase",
-    status: "Completed",
-    transactionDate: "2024-08-15",
-    amount: 150,
-  },
-  {
-    customerId: "C002",
-    type: "Refund",
-    status: "Pending",
-    transactionDate: "2024-08-16",
-    amount: 100,
-  },
-  {
-    customerId: "C003",
-    type: "Purchase",
-    status: "Failed",
-    transactionDate: "2024-08-17",
-    amount: 75,
-  },
-];
-
+// Example usage with dummy dat
 const TransactionTableComponent: React.FC = () => {
+  const [transactions, setTransactions] = useState<CustomerTransaction[]>([])
+  const { user } = useUser();
+  const fillTransactions = async () => {
+    if (user) {
+      const transactions = await databases.listDocuments(
+        "66c22b21001e7eea3fa7",
+        "670d57f60039702f0f5b",
+        [Query.equal("userId", user?.$id)]
+      );
+      const purgedTransactions = transactions.documents.map((doc) => {
+        return {
+          customerId: user.$id,
+          amount: doc.amount,
+          transactionDate: doc.$createdAt,
+          type: 'payment'
+        };
+      });
+      setTransactions(purgedTransactions)
+    }
+  };
+  useEffect(() => {
+
+  }, [])
   return <TransactionTable transactions={transactions} />;
 };
 
