@@ -1,0 +1,16 @@
+name: workflow test
+
+on:
+  push:
+    branches: -master
+
+jobs:
+  build:
+    name: First CI/CD
+    runs-on: ubuntu-latest
+    steps:
+      - name: my first step
+        uses: actions/checkout@v4
+
+      - name: Greetings
+        run: echo "Hello to DevOps !"
