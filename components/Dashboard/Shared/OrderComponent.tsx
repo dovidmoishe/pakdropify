@@ -33,7 +33,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ orders }) => {
                 Customer Name
               </th>
               <th className="px-6 py-3 border-b text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                Customer's Phone Number
+                Customer&apos;s Phone Number
               </th>
               <th className="px-6 py-3 border-b text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                 Customer Email

@@ -147,7 +147,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isVerifiedAccount }) => {
                       }`}
                       onClick={handleToggleLogin}
                     >
-                      I don't have an account
+                      I don&apos;t have an account
                     </button>
                   </div>
 

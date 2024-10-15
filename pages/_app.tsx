@@ -1,6 +1,5 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import { Head } from "next/document";
 import { NextSeo } from "next-seo";
 import UserProvider from "@/lib/context/user";
 
