@@ -304,12 +304,12 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isVerifiedAccount }) => {
                           placeholder="Why are you doing dropshipping in Malaysia explain in detail?"
                           value={formValues.interestReason}
                           onChange={handleChange}
-                          color="black"
-                          className="border rounded-md p-2 w-full h-24"
+                          
+                          className="border text-black rounded-md p-2 w-full h-24"
                         />
                       </LabelInputContainer>
                       <LabelInputContainer className="mb-4">
-                        <Label htmlFor="iban">IBAN</Label>
+                        <Label htmlFor="password">Password</Label>
                         <Input
                           id="password"
                           name="password"
