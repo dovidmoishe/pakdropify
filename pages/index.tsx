@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { account } from "@/lib/appwrite";
 import { useUser } from "@/lib/context/user";
+import { FaTruckMedical } from "react-icons/fa6";
 
 export default function Home() {
   const [currentUser, setCurrentUser] = useState<any>(null);
@@ -50,12 +51,12 @@ export default function Home() {
       {activeSession && !userVerified ? (
         <>
           <Navbar />
-          <HeroSection isVerifiedAccount={false} />
+          <HeroSection isVerifiedAccount={true} />
         </>
       ) : (
         <>
           <Navbar />
-          <HeroSection isVerifiedAccount={true} />
+          <HeroSection isVerifiedAccount={false} />
         </>
       )}
     </>

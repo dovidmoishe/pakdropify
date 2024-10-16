@@ -99,7 +99,7 @@ const OrderTableComponent: React.FC<IOrderTableComponent> = ({ orderType }) => {
 
   useEffect(() => {
     populateOrders();
-  }, [user]); // Fetch once when the user is available
+  }, [populateOrders, user]); // Fetch once when the user is available
 
   // Filtering the orders by type based on the active tab
   const filteredOrders =

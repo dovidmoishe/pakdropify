@@ -31,7 +31,8 @@ interface AuthContextInterface {
     cnicNumber: string,
     bankName: string,
     bankAccountTitle: string,
-    bankAccountNumber: string
+    bankAccountNumber: string,
+    interestReason:string
   ) => Promise<void>;
 }
 
@@ -83,7 +84,8 @@ export default function UserProvider({ children }: UserProviderProps) {
     cnicNumber: string,
     bankName: string,
     bankAccountTitle: string,
-    bankAccountNumber: string
+    bankAccountNumber: string,
+    interestReason: string
   ) {
 
     const randomString = Math.random().toString(36).substring(2, 15);
@@ -98,6 +100,7 @@ export default function UserProvider({ children }: UserProviderProps) {
       bankAccountTitle,
       iban,
       bankAccountNumber,
+      interestReason
     };
     console.log("Creating document with data:", extraUserData);
     await databases.createDocument('66c22b21001e7eea3fa7', '6706dfd9002ba4b2cdcf', userId, extraUserData);

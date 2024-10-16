@@ -1,3 +1,5 @@
+
+
 import React, { useContext, useState } from "react";
 import {
   Modal,
@@ -22,6 +24,7 @@ interface FormValues {
   bankAccountTitle: string; // New field
   bankAccountNumber: string; // New field
   iban: string; // New field
+  interestReason: string; // New field for textarea
 }
 
 interface LoginValues {
@@ -45,6 +48,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isVerifiedAccount }) => {
     bankAccountTitle: "", // New field
     bankAccountNumber: "", // New field
     iban: "", // New field
+    interestReason: "", // Initialize the textarea field
   });
 
   const [loginValues, setLoginValues] = useState<LoginValues>({
@@ -54,9 +58,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isVerifiedAccount }) => {
 
   const [isLogin, setIsLogin] = useState(true); // To toggle between login and signup
 
-  const { register, login } = useUser()
+  const { register, login } = useUser();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormValues((prevValues) => ({ ...prevValues, [name]: value }));
   };
@@ -79,6 +83,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isVerifiedAccount }) => {
       iban,
       phoneNumber,
       cnicNumber,
+      interestReason, // Include the new field
     } = formValues;
 
     if (register) {
@@ -92,7 +97,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isVerifiedAccount }) => {
         cnicNumber,
         bankName,
         bankAccountTitle,
-        bankAccountNumber
+        bankAccountNumber,
+        interestReason // Send the new field in the request
       );
     }
   };
@@ -153,7 +159,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isVerifiedAccount }) => {
 
                   {isLogin ? (
                     <form onSubmit={handleLoginSubmit}>
-                      <LabelInputContainer>
+                      <LabelInputContainer className="mb-4">
                         <Label htmlFor="email">Email Address</Label>
                         <Input
                           id="email"
@@ -164,7 +170,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isVerifiedAccount }) => {
                           onChange={handleLoginChange}
                         />
                       </LabelInputContainer>
-                      <LabelInputContainer>
+                      <LabelInputContainer className="mb-4">
                         <Label htmlFor="password">Password</Label>
                         <Input
                           id="password"
@@ -186,7 +192,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isVerifiedAccount }) => {
                   ) : (
                     <form onSubmit={handleSubmit}>
                       <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
-                        <LabelInputContainer>
+                        <LabelInputContainer className="mb-4">
                           <Label htmlFor="firstname">First name</Label>
                           <Input
                             id="firstname"
@@ -197,7 +203,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isVerifiedAccount }) => {
                             onChange={handleChange}
                           />
                         </LabelInputContainer>
-                        <LabelInputContainer>
+                        <LabelInputContainer className="mb-4">
                           <Label htmlFor="lastname">Last name</Label>
                           <Input
                             id="lastname"
@@ -256,9 +262,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isVerifiedAccount }) => {
                         />
                       </LabelInputContainer>
                       <LabelInputContainer className="mb-4">
-                        <Label htmlFor="bankAccountTitle">
-                          Bank Account Title
-                        </Label>
+                        <Label htmlFor="bankAccountTitle">Bank Account Title</Label>
                         <Input
                           id="bankAccountTitle"
                           name="bankAccountTitle"
@@ -269,13 +273,11 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isVerifiedAccount }) => {
                         />
                       </LabelInputContainer>
                       <LabelInputContainer className="mb-4">
-                        <Label htmlFor="bankAccountNumber">
-                          Bank Account Number
-                        </Label>
+                        <Label htmlFor="bankAccountNumber">Bank Account Number</Label>
                         <Input
                           id="bankAccountNumber"
                           name="bankAccountNumber"
-                          placeholder="000123456789"
+                          placeholder="123456789"
                           type="text"
                           value={formValues.bankAccountNumber}
                           onChange={handleChange}
@@ -286,34 +288,45 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isVerifiedAccount }) => {
                         <Input
                           id="iban"
                           name="iban"
-                          placeholder="PK00ABCD1234567890123456"
+                          placeholder="GB29NWBK60161331926819"
                           type="text"
                           value={formValues.iban}
                           onChange={handleChange}
                         />
                       </LabelInputContainer>
+
+                      {/* New Textarea for Interest Reason */}
                       <LabelInputContainer className="mb-4">
-                        {" "}
-                        <Label htmlFor="password">Password</Label>{" "}
+                        <Label htmlFor="interestReason">Why are you interested?</Label>
+                        <textarea
+                          id="interestReason"
+                          name="interestReason"
+                          placeholder="Why are you doing dropshipping in Malaysia explain in detail?"
+                          value={formValues.interestReason}
+                          onChange={handleChange}
+                          color="black"
+                          className="border rounded-md p-2 w-full h-24"
+                        />
+                      </LabelInputContainer>
+                      <LabelInputContainer className="mb-4">
+                        <Label htmlFor="iban">IBAN</Label>
                         <Input
                           id="password"
                           name="password"
-                          placeholder="••••••••"
-                          type="password"
+                          placeholder="........."
+                          type="text"
                           value={formValues.password}
                           onChange={handleChange}
-                        />{" "}
+                        />
                       </LabelInputContainer>
 
                       <button
-                        className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
+                        className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium"
                         type="submit"
                       >
-                        Sign up &rarr;
+                        Signup &rarr;
                         <BottomGradient />
                       </button>
-
-                      <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 h-[1px] w-full" />
                     </form>
                   )}
                 </ModalContent>
@@ -324,8 +337,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isVerifiedAccount }) => {
       </div>
     </section>
   );
-};
-
+}
 const BottomGradient = () => {
   return (
     <>
@@ -334,6 +346,8 @@ const BottomGradient = () => {
     </>
   );
 };
+
+
 
 const LabelInputContainer = ({
   children,
